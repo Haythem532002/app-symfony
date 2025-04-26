@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello BlogController!{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper {
+            margin: 1em auto;
+            max-width: 800px;
+            width: 95%;
+            font: 18px/1.5 sans-serif;
+        }
+
+        .example-wrapper code {
+            background: #F5F5F5;
+            padding: 2px 6px;
+        }
+    </style>
+
+    <div class="example-wrapper">
+        <h1>Hello {{ controller_name }}! ✅</h1>
+
+        This friendly message is coming from:
+        <ul>
+            <li>Your controller at <code>D:/Study/Ing-A2-03/Semester
+                    2/Web 2.0
+                    3.0/app/myapp/src/Controller/BlogController.php</code>
+            </li>
+            <li>Your template at <code>D:/Study/Ing-A2-03/Semester
+                    2/Web 2.0
+                    3.0/app/myapp/templates/blog/index.html.twig</code>
+            </li>
+        </ul>
+    </div>
+    <section class="d-flex flex-wrap">
+        {% for article in articles %}
+            <article class="card m-5" style="width: 35rem;">
+                <div class="card-body">
+                    <h2>{{ article.title }} </h2>
+                    <div class="metadata">Edité
+                        le {{ article.createdAt | date("m/d/Y") }}
+                        à {{ article.createdAt | date("h/i") }}</div>
+                    <div class="content d-flex flex-column">
+                        <img src="{{ article.image }}"
+                             alt=""
+                             style="width: 20%; height: auto;">
+                        {{ article.content | raw }}
+                        <div>
+                            <a href="{{ path('blog_show', {id: article.id}) }}"
+                               class="btn btn-primary">Lire
+                                la
+                                suite</a>
+                            <a href="{{ path('blog_edit', {id: article.id}) }}"
+                               class="btn btn-primary">Modifier
+                                Article</a>
+                            <a href="{{ path('blog_delete', {id: article.id}) }}"
+                               class="btn btn-primary">Effacer
+                                Article</a>
+                        </div>
+                    </div>
+                    <div>
+            </article>
+        {% endfor %}
+    </section>
+{% endblock %}
