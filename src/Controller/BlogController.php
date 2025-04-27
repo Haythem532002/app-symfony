@@ -13,6 +13,8 @@ use Symfony\Component\Routing\Attribute\Route;
 
 
 use App\Entity\Article;
+use App\Entity\Comment;
+use App\Form\CommentType;
 use App\Repository\ArticleRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -67,13 +69,32 @@ final class BlogController extends AbstractController
     }
 
     #[Route('/blog/{id}', name: 'blog_show')]
-    public function show($id): Response
+    public function show($id, Request $request, EntityManagerInterface $entityManager): Response
     {
         $article = $this->repo->find($id);
-        return $this->render('blog/show.html.twig',
-            [
-                'article' => $article
-            ]);
+
+        if (!$article) {
+            throw $this->createNotFoundException('The article does not exist');
+        }
+
+        $comment = new Comment();
+        $comment->setArticle($article);
+        $comment->setCreatedat(new \DateTimeImmutable());
+
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('blog_show', ['id' => $id]);
+        }
+
+        return $this->render('blog/show.html.twig', [
+            'article' => $article,
+            'form' => $form->createView(),
+        ]);
     }
 
     #[Route('/blog/delete/{id}', name: 'blog_delete')]

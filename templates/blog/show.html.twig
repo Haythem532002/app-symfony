@@ -1,11 +1,33 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-<article>
+<article class="container">
     <h2>{{article.title}} </h2>
     <div class="metadata">Edité le {{article.createdAt | date("m/d/Y")}} à {{article.createdAt | date("h/i")}}</div>
     <div class="content">
-    <img src="{{article.image}}" alt="">
-    {{article.content | raw }}
+        <img src="{{article.image}}" alt="">
+        {{article.content | raw }}
     </div>
+    <section id="commentaires">
+        {% for comment in article.comments %}
+        <div class="comment">
+            <div class="row">
+                <div class="col-3">
+                {{comment.author}}(<small>{{comment.createdAt | date("m/d/Y")}} à {{article.createdAt | date("h/i")}}</small>)
+                </div>
+                <div class="col">
+                    {{comment.content | raw }}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </section>
+    <section id="add-comment">
+    <h3>Add a Comment</h3>
+    {{ form_start(form) }}
+    {{ form_row(form.author, {'attr': {'class': 'form-control'}}) }}
+    {{ form_row(form.content, {'attr': {'class': 'form-control'}}) }}
+    <button type="submit" class="btn btn-primary mt-3">Submit</button>
+    {{ form_end(form) }}
+</section>
 </article>
 {% endblock %}

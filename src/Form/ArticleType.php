@@ -7,6 +7,10 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+
+use App\Entity\Category;
+use App\Entity\Comment;
 
 class ArticleType extends AbstractType
 {
@@ -19,7 +23,9 @@ class ArticleType extends AbstractType
             ->add('save', SubmitType::class, ['label' => 'Create Article'])
             ->add('createdat', null, [
                 'widget' => 'single_text'
-            ]);
+            ])
+            ->add('category',EntityType::class,['class' => Category::class,'choice_label' => 'title'])
+            ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
