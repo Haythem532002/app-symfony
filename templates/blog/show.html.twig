@@ -21,6 +21,7 @@
         </div>
         {% endfor %}
     </section>
+{% if app.user %}
     <section id="add-comment">
     <h3>Add a Comment</h3>
     {{ form_start(form) }}
@@ -29,5 +30,6 @@
     <button type="submit" class="btn btn-primary mt-3">Submit</button>
     {{ form_end(form) }}
 </section>
+{% endif %}
 </article>
 {% endblock %}

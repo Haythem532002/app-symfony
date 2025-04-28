@@ -24,7 +24,7 @@ class Article
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Assert\Length(min : 10)]
+    #[Assert\Length(min: 10)]
     private ?string $content = null;
 
     #[ORM\Column(type: Types::TEXT)]

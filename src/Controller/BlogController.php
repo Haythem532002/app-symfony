@@ -31,9 +31,17 @@ final class BlogController extends AbstractController
     public function index(): Response
     {
         $articles = $this->repo->findAll();
+        $user = $this->getUser();
+        $username = $user ? $user->getUsername() : null;
+
+        if ($this->getUser()) {
+            $this->addFlash('success', 'You are successfully logged in as ' . $this->getUser()->getUsername());
+        }
+
         return $this->render('blog/index.html.twig', [
             'controller_name' => 'BlogController',
-            "articles" => $articles
+            'articles' => $articles,
+            'username' => $username
         ]);
     }
 

@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <div class="container">
+    <h1>Inscription </h1>
+    {{ form_start(form) }}
+    {{ form_row(form.username, {'label':'User Name'
+    ,'attr':{'placeholder':'Please enter user Name ...'}}) }}
+    {{ form_row(form.email, {'label':'User Email'
+    ,'attr':{'placeholder':'Please enter user Email ...'}}) }}
+    {{ form_row(form.password, {'label':'User Password'
+    ,'attr':{'placeholder':'Please enter user Password ...'}}) }}
+    {{ form_row(form.confirm_password,{'label':'Confirm Password'
+    ,'attr':{'placeholder':'Please re-enter user Password ...'}}) }}
+
+    <button type="submit" class="btn btn-success">Inscription</button>
+    {{ form_end(form) }}
+    </div>
+{% endblock %}

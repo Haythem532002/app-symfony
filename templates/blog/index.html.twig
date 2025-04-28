@@ -32,6 +32,9 @@
             </li>
         </ul>
     </div>
+    {% if username %}
+        <p>Welcome, {{ username }}!</p>
+    {% endif %}
     <section class="d-flex flex-wrap">
         {% for article in articles %}
             <article class="card m-5" style="width: 35rem;">
